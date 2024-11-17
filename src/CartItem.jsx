@@ -17,17 +17,17 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleContinueShopping = (e) => {
-   
+     onContinueShopping(e);
   };
 
 
 
   const handleIncrement = (item) => {
-    dispatch(updateQuantity(item));
+    dispatch(updateQuantity({name: item.name, quantity : item.quantity + 1}));
   };
 
   const handleDecrement = (item) => {
-    dispatch(updateQuantity(item));
+    dispatch(updateQuantity({name: item.name, quantity : item.quantity - 1}));
   };
 
   const handleRemove = (item) => {
