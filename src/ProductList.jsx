@@ -10,12 +10,12 @@ function ProductList() {
     const cartItems = useSelector((state) => state.cart);
 
     const handleAddToCart = (product) => {
-        dispatchEvent(addItem(product));
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true,
+        dispatch(addItem(product));
+        // setAddedToCart((prevState) => ({
+        //     ...prevState,
+        //     [product.name]: true,
 
-        }));
+        // }));
     };
 
     const plantsArray = [
