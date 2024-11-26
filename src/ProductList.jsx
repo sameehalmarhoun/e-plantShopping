@@ -7,7 +7,12 @@ function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
-    const cartItems = useSelector((state) => state.cart);
+    const cartItems = useSelector(state => state.cart.items);
+    useEffect(() => {}, []);
+
+    const alreadyInCart = (productName) => {
+        return cartItems.some((product) => product.name === productName);
+    }
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
@@ -17,6 +22,10 @@ function ProductList() {
 
         // }));
     };
+
+    const totalItems = () => {
+        return cartItems.reduce((total, products) => total + products.quantity, 0);
+    }
 
     const plantsArray = [
         {
@@ -292,6 +301,8 @@ const handlePlantsClick = (e) => {
                                 <div>{plant.cost}</div>
                                 <div>{plant.description}</div>
                                 <button className='product-button' onClick={()=> handleAddToCart(plant)}>Add To Cart</button>
+                                <button style={{backgroundColor:alreadyInCart(plant.name)?"gray":"#615EFC"}} disabled={alreadyInCart(plant.name)? true:false} 
+                                    onClick={()=>handleAddToCart({name:plant.name,cost:plant.cost,image:plant.image})} className='product-button'>Add to Cart</button>
                                 
                             </div>
                             )}
