@@ -8,11 +8,35 @@ function ProductList() {
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
-    const cartItems = useSelector(state => state.cart.items);
-    useEffect(() => {}, []);
+    const cartItems = useSelector((state) => state.cart);
+    // useEffect(() => {}, []);
 
-    const alreadyInCart = (productName) => {
-        return cartItems.some((product) => product.name === productName);
+    // const alreadyInCart = (productName) => {
+    //     return cartItems.some((product) => product.name === productName);
+    // }
+
+  const addToCart = (product) => {
+      // Sets boolean value if item is in cart initially to false, not found
+      let alreadyIncart = false;
+    
+      // slice creates a shallow copy of the cartItems array
+      const cartItems = this.state.cartItems.slice();
+    
+      // Iterate the cartItems copy, calling a function for each element
+      cartItems.forEach((item) => {
+        // if there is a matching item id
+        if (item.id === product.id) {
+          // increment item count
+          item++;
+          // set found to true
+          alreadyIncart = true;
+        }
+        // if item was not found in cart, 
+        // add it to the cartItems array with an initial count value
+        if (!alreadyIncart) {
+          cartItems.push(...product, count:1)
+        }
+      })
     }
 
     const handleAddToCart = (product) => {
