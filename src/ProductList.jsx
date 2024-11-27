@@ -297,8 +297,7 @@ const handlePlantsClick = (e) => {
                                 <img className='product-image' src={plant.image} alt={plant.name} />
                                 <div>{plant.cost}</div>
                                 <div>{plant.description}</div>
-                                <button className='product-button' onClick={()=> handleAddToCart(plant)}>Add To Cart</button>
-                                <button style={{backgroundColor:alreadyInCart(plant.name)?"gray":"#615EFC"}} disabled={alreadyInCart(plant.name)? true:false} 
+                                <button style={{backgroundColor:alreadyInCart(plant.name)?"gray":"#615EFC"}} disabled={alreadyInCart(plant.name)? true:false}
                                     onClick={()=>handleAddToCart({name:plant.name,cost:plant.cost,image:plant.image})} className='product-button'>Add to Cart</button>
                                 
                             </div>
