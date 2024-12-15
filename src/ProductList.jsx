@@ -9,11 +9,7 @@ function ProductList() {
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart);
-    // useEffect(() => {}, []);
-
-    // const alreadyInCart = (productName) => {
-    //     return cartItems.some((product) => product.name === productName);
-    // }
+    
 
   const addToCart = (product) => {
       // Sets boolean value if item is in cart initially to false, not found
@@ -46,6 +42,8 @@ function ProductList() {
 
     const totalItems = () => {
         return cartItems.reduce((total, products) => total + products.quantity, 0);
+        const cartItems = [];
+        
     }
 
     const plantsArray = [
