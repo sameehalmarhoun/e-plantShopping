@@ -41,10 +41,44 @@ function ProductList() {
     };
 
     const totalItems = () => {
-        return cartItems.reduce((total, products) => total + products.quantity, 0);
-        const cartItems = [];
-        
-    }
+        const items = [];
+        cartItems.forEach((item) => {
+            if (
+                item.quantity > 0 && 
+                !items.some((i) => i.name === item.name))
+            {
+                items.push({...item});
+            }
+        });
+      return items;  
+    };
+    const items = totalItems();
+    const ItemsDisplay = ({ items }) => {
+        console.log(items);
+        return <>
+            <div className="display_box1">
+                {items.length === 0 && <p>No items selected</p>}
+                <table className="table_item_data">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Unit Cost</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.name}</td>
+                                <td>${item.cost}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
+    };
 
     const plantsArray = [
         {
