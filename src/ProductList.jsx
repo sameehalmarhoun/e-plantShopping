@@ -1,84 +1,17 @@
 import React, { useState,useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import './ProductList.css'
 import CartItem from './CartItem';
-import { addItem } from './CartSlice';
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
-    const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.cart);
-    
-
-  const addToCart = (product) => {
-      // Sets boolean value if item is in cart initially to false, not found
-      let alreadyIncart = false;
-    
-      // slice creates a shallow copy of the cartItems array
-      const cartItems = this.state.cartItems.slice();
-    
-      // Iterate the cartItems copy, calling a function for each element
-      cartItems.forEach((item) => {
-        // if there is a matching item id
-        if (item.id === product.id) {
-          // increment item count
-          item++;
-          // set found to true
-          alreadyIncart = true;
-        }
-        // if item was not found in cart, 
-        // add it to the cartItems array with an initial count value
-        if (!alreadyIncart) {
-          cartItems.push(...product, count:1)
-        }
-      })
-    }
-
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
-        
-    };
-
-    const totalItems = () => {
-        const items = [];
-        cartItems.forEach((item) => {
-            if (
-                item.quantity > 0 && 
-                !items.some((i) => i.name === item.name))
-            {
-                items.push({...item});
-            }
-        });
-      return items;  
-    };
-    const items = totalItems();
-    const ItemsDisplay = ({ items }) => {
-        console.log(items);
-        return <>
-            <div className="display_box1">
-                {items.length === 0 && <p>No items selected</p>}
-                <table className="table_item_data">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Unit Cost</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.name}</td>
-                                <td>${item.cost}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </>
-    };
+        setAddedToCart((prevState) => ({
+           ...prevState,
+           [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+         }));
+      };
 
     const plantsArray = [
         {
@@ -338,29 +271,26 @@ const handlePlantsClick = (e) => {
             </div>
             <div style={styleObjUl}>
                 <div> <a href="#" onClick={(e)=>handlePlantsClick(e)} style={styleA}>Plants</a></div>
-                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>Cart<h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
+                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
             </div>
         </div>
         {!showCart? (
         <div className="product-grid">
-            {plantsArray.map((category,index)=>(
-                <div key={index}>
-                    <h1><div className='product-title'>{category.category}</div></h1>
-                    <div className='product-list'>
-                        {category.plants.map((plant,plantIndex)=>
-                            <div className='product-card' key={plantIndex}>
-                                <div className='product-title'>{plant.name}</div>
-                                <img className='product-image' src={plant.image} alt={plant.name} />
-                                <div>{plant.cost}</div>
-                                <div>{plant.description}</div>
-                                <button style={{backgroundColor:alreadyInCart(plant.name)?"gray":"#615EFC"}} disabled={alreadyInCart(plant.name)? true:false}
-                                    onClick={()=>handleAddToCart({name:plant.name,cost:plant.cost,image:plant.image})} className='product-button'>Add to Cart</button>
-                                
-                            </div>
-                            )}
+           {plantsArray.map((category, index) => (
+            <div key={index}>
+                <h1><div>{category.category}</div></h1>
+                <div className="product-list">
+                    {category.plants.map((plant, plantIndex) => (
+                    <div className="product-card" key={plantIndex}>
+                        <img className="product-image" src={plant.image} alt={plant.name} />
+                        <div className="product-title">{plant.name}</div>
+                        {/*Similarly like the above plant.name show other details like description and cost*/}
+                        <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
                     </div>
+                    ))}
                 </div>
-            ))}
+            </div>
+            ))} 
 
         </div>
  ) :  (
