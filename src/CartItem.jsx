@@ -29,7 +29,6 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleIncrement = (item) => {
     // dispatch(updateQuantity(item));
-    // dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
     const totalItem = { ...item };
     totalItem.quantity++;
     dispatch(updateQuantity(totalItem));
@@ -37,9 +36,7 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleDecrement = (item) => {
     //dispatch(updateQuantity(item));
-    // dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
     const totalItem = { ...item };
-
         if (totalItem.quantity == 1) {
             dispatch(removeItem(totalItem));
         } else {
